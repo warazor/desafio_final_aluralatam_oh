@@ -1,0 +1,11 @@
+import pandas as pd
+import os
+
+# Define la ruta a la subcarpeta y al archivo
+ruta_archivo = os.path.join("base_conocimiento_csv", "base_inicial.csv")
+#"/base_conocimiento_csv/base_inicia"l.csv
+# Lee el archivo (ejemplo para un CSV)
+df = pd.read_csv(ruta_archivo)
+
+# Muestra las primeras filas
+print(df.head())
