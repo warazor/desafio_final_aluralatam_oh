@@ -1,0 +1,43 @@
+name: Compilar y Validar Imagen Docker de Streamlit
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Clonar tu código al entorno de GitHub
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
+
+    # 2. Compilar la nueva imagen estructurada con Streamlit
+    - name: Compilar Imagen de Docker
+      run: |
+        docker build -t chatbot-rag-streamlit:latest .
+
+    # 3. Arrancar el contenedor en segundo plano inyectando la API Key de Groq
+    - name: Iniciar Contenedor en Segundo Plano
+      run: |
+        docker run -d \
+          -p 8501:8501 \
+          -e GROQ_API_KEY="${{ secrets.GROQ_API_KEY }}" \
+          --name mi_chat_ia \
+          chatbot-rag-streamlit:latest
+
+    # 4. Esperar unos segundos a que la interfaz web inicie y validar que esté activa
+    - name: Validar que Streamlit responda correctamente
+      run: |
+        sleep 5
+        curl --fail http://localhost:8501 || exit 1
+        echo "¡La imagen de Docker compiló y la interfaz de la IA arrancó con éxito!"
+
+    # 5. Detener el contenedor de pruebas de forma limpia
+    - name: Detener Contenedor
+      if: always()
+      run: |
+        docker stop mi_chat_ia || true
+        docker rm mi_chat_ia || true
