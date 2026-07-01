@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY app.py .
 
 # Creamos la carpeta donde el contenedor esperará los archivos CSV
-RUN mkdir -p mis_archivos_csv
+RUN mkdir -p base_conocimiento_csv
 
 # Instalamos todas las librerías del proyecto (incluyendo Streamlit)
 RUN pip install --no-cache-dir \
