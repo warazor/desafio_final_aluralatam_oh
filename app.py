@@ -235,7 +235,7 @@ def main():
         st.session_state.messages.append({"role": "user", "content": pregunta})
 
         with st.chat_message("assistant"):
-            with st.spinner("La IA está consultando la base de datos vectorial..."):
+            with st.spinner("La Supper IA está consultando la base de datos vectorial..."):
                 respuesta_final = obtener_respuesta_ia(retriever, pregunta)
                 st.write(respuesta_final)
 
