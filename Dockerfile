@@ -9,22 +9,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copiamos el archivo de código y creamos la estructura de carpetas necesaria
+# Instalamos primero las dependencias (mejor cacheo de capas)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiamos el código y la base de conocimiento/vectores existentes
 COPY app.py .
-
-# Creamos la carpeta donde el contenedor esperará los archivos CSV
-RUN mkdir -p base_conocimiento_csv
-
-# Instalamos todas las librerías del proyecto (incluyendo Streamlit)
-RUN pip install --no-cache-dir \
-    pandas \
-    langchain \
-    langchain-core \
-    langchain-community \
-    langchain-groq \
-    sentence-transformers \
-    chromadb \
-    streamlit
+COPY base_conocimiento_csv ./base_conocimiento_csv
+COPY db_vectores ./db_vectores
 
 # Exponemos el puerto estándar que utiliza Streamlit
 EXPOSE 8501
