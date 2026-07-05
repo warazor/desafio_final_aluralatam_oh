@@ -199,3 +199,9 @@ desafio_final_aluralatam_oh/
 │   └── terminos_y_condiciones.csv
 └── db_vectores/               # Base de datos vectorial persistente (ChromaDB)
 ```
+Evidencia Ejecución OCI
+URL:http://148.116.110.159:8501/
+
+<img width="1912" height="955" alt="image" src="https://github.com/user-attachments/assets/5242d289-3047-4191-a007-c0038c308049" />
+
+
